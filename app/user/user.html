@@ -1,0 +1,21 @@
+<div class="container">
+	<div class="userForm">
+		<form class="form-horizontal" ng-submit="modifyingUser()">
+			<div class="form-group">
+				<label for="uname">Username:</label>
+				<input type="text" name="uname" class="form-control" ng-model="user.userName">
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="email" name="email" class="form-control" ng-model="user.email">
+			</div>
+			<div class="form-group">
+				<label for="uname">Password:</label>
+				<input type="password" name="password" class="form-control" ng-model="user.password" readonly="readonly">
+			</div>
+			<div class="form-group">
+				<button class="btn btn-danger" ng-click="updateUser()">Update</button>
+			</div>
+		</form>
+	</div>
+</div>

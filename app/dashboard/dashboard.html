@@ -1,0 +1,20 @@
+
+<app-header></app-header>
+<input type="text" name="searchText" class="searchBar col-sm-6" ng-model="searchText">
+<div class="container dashboard">
+	<div class="status row">
+		<h1 class="col-sm-6">{{response}}</h1>
+        
+	</div>
+	<div class="existingUsers row">
+		<div class="panel panel-primary col-sm-4 col-sm-offset-2" ng-repeat=" user in userlist.data | filter:searchText ">
+    		<div class="panel-heading">
+    			<a href="#!/update/{{user._id}}" class="username">{{user.userName}}</a>
+    			<span class="fa fa-trash-o delete_user" ng-click="deleteUser($index,user._id)"></span>
+    		</div>
+    		<div class="panel-body">
+    			<a href="#!/update/{{user._id}}">{{user.email}}</a>
+    		</div>
+  		</div>
+	</div>
+</div>

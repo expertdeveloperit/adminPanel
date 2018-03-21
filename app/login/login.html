@@ -1,0 +1,67 @@
+<!-- <div class="login_page">
+	<div class="login_head">
+		<div class="row form_switch">
+			<button class="btn btn-primary" ng-click="login()">Login</button>
+			<button class="btn btn-primary" ng-click="signup()">Sign Up</button>
+		</div>
+		<div class="login_form" >
+			<form class="form-horizontal" ng-submit="logMeIn()" >
+				<div class="form-group">
+					<input type="email" name="email" class="form-control" ng-model="formData.email" placeholder="Username" required>
+				</div>
+				<div class="form-group">
+					<input type="password" name="password" class="form-control" ng-model="formData.password" placeholder="password" required>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-success login_btn form-control">Login</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div> -->
+<div class="login_page">
+	<div class="container login_register">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="login_form" ng-if="disableLogin">
+					<form class="form-horizontal" ng-submit="logMeIn()" >
+						<h3 class="login_head text-center">Login</h3>
+						<div class="form-group">
+							<input type="email" name="email" class="form-control" ng-model="formData.email" placeholder="Username" required>
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" class="form-control" ng-model="formData.password" placeholder="password" required>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-success login_btn ">Login</button>
+						</div>
+					</form>
+				</div>
+				<div class="signup_form" ng-if="!disableLogin">
+					<form class="form-horizontal" ng-submit="registerMe()">
+						<h3 class="signup_head text-center">SignUp!</h3>
+						<div class="form-group">
+							<input type="text" name="name" class="form-control" placeholder="Name" ng-model="userData.name" required>
+						</div>
+						<div class="form-group">
+							<input type="email" name="email" class="form-control" placeholder="Email" ng-model="userData.email" required>
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" class="form-control" placeholder="Password" ng-model="userData.password" required>
+						</div>
+						<div class="form-group">
+							<input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" ng-model="userData.confirm_password" required>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-success signup_btn">Sign Up</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="section_2 col-sm-6">
+				<h3 class="text-center section_heading">{{head_text}}</h3>
+				<button type="submit" class="btn change_btn" ng-click="change_form()">{{btn_text}}</button>
+			</div>
+		</div>
+	</div>
+</div>

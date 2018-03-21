@@ -9,7 +9,7 @@ angular.module('myApp.login', ['ngRoute'])
   });
 }])
 
-.controller('LoginCtrl', ['$scope','$http','$timeout','userService',function($scope,$http,$timeout,userService) {
+.controller('LoginCtrl', ['$scope','$http','$timeout','SweetAlert','userService',function($scope,$http,$timeout,SweetAlert,userService) {
     $scope.message="";
     $scope.token_val = "";
     $scope.disableLogin = true;
@@ -19,19 +19,21 @@ angular.module('myApp.login', ['ngRoute'])
     $scope.head_text = "Don't have an account?";
 
 	$scope.logMeIn = function(){
-
+    console.log("in login function");
 		console.log($scope.formData);
     
        userService.login($scope.formData).success(function(data){
-        
-        if(data.data.role == "user"){
+        console.log(data,"executing call to server for login");
           localStorage.setItem('token', JSON.stringify(data.token));
           $scope.token_val = JSON.parse(localStorage.getItem('token'));
+          console.log(data.data.role,"role");
+        
+        if(data.data.role == "user"){
           window.location = "#!/profile";
         }
         if(data.data.role == "superuser"){
-           localStorage.setItem('token', JSON.stringify(data.token));
-           $scope.token_val = JSON.parse(localStorage.getItem('token'));
+           // localStorage.setItem('token', JSON.stringify(data.token));
+           // $scope.token_val = JSON.parse(localStorage.getItem('token'));
           console.log($scope.token_val,"token");
           window.location = "#!/dashboard";
         }
@@ -39,8 +41,10 @@ angular.module('myApp.login', ['ngRoute'])
        }).error(function(data){
         console.log(data);
         $scope.message = data.message;
-        alert($scope.message);
+        console.log($scope.message);
+        // alert($scope.message);
         $scope.formData = "";
+        SweetAlert.swal($scope.message);
        })     
   }
 
@@ -64,7 +68,8 @@ angular.module('myApp.login', ['ngRoute'])
                   // clear the form so our user is ready to enter another
                   $scope.userData = {}; 
                   console.log(data);
-                  alert(data.message);
+                  // alert(data.message);
+                  SweetAlert.swal(data.message);
               });
         
       }
@@ -72,11 +77,13 @@ angular.module('myApp.login', ['ngRoute'])
         //to clear confirm password and password field on password mismatch
         $scope.userData.password ="" ;
         $scope.userData.confirm_password = "" ;
-        alert("Password and confirm password doesnot match");
+        // alert("Password and confirm password doesnot match");
+        SweetAlert.swal("Password and confirm password should be same");
       }
     }
     else{
-      alert("Please fill form data");
+      // alert("Please fill form data");
+      SweetAlert.swal("Please fill form data");
     }
   }
 

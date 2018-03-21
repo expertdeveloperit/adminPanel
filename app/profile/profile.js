@@ -9,7 +9,7 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
   });
 }])
 
-.controller('ProfileCtrl', ['$scope', 'Upload', '$timeout','userService',function($scope,Upload,$timeout,userService) {
+.controller('ProfileCtrl', ['$scope', 'Upload', '$timeout','SweetAlert','userService',function($scope,Upload,$timeout,SweetAlert,userService) {
 
  $scope.userData = {};
  $scope.isDisabled = true;
@@ -35,9 +35,11 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
                       $scope.userData.userName = $scope.data.userName;
                       $scope.userData.email = $scope.data.email;
                       $scope.userData.createdAt = $scope.data.createdAt;
+                      SweetAlert.swal("No changes are saved");
                     }
 
   $scope.info = function(){
+    console.log("entering in userinfo function");
                 userService.user().success(function(data){
                   console.log(data.data,"data on success");
                   $scope.isDisabled = true;
@@ -67,9 +69,10 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
   $scope.update = function(){
     userService.updateUser($scope.userData,$scope.userData.id).success(function(data){
        $scope.isDisabled = true;
-      console.log($scope.userData.userName,"username after updation");
-      console.log($scope.userData,"field data");
-      console.log(data,"updated data");
+      // console.log($scope.userData.userName,"username after updation");
+      // console.log($scope.userData,"field data");
+      // console.log(data,"updated data");
+      SweetAlert.swal("Data updated successfully!");
     }).error(function(data){
       console.log(data,"error on updating data");
     });
@@ -77,13 +80,41 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
 
   $scope.deleteImage = function(){
 
-    userService.removeProfilePicture().success(function(data){
-     $scope.userData.profilePicture = '';
-      console.log(data,"data on image removal");
-    }).error(function(data){
-      alert(data);
-    })
-  }
+    SweetAlert.swal({
+                      title: "Are you sure?",
+                      text: "Your will not be able to recover this image!",
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#DD6B55",confirmButtonText: "Yes, delete it!",
+                      cancelButtonText: "No",
+                      closeOnConfirm: false,
+                      closeOnCancel: false 
+                    }, 
+                      function(isConfirm){ 
+                        if (isConfirm) {
+                            userService.removeProfilePicture().success(function(data){
+                              $scope.userData.profilePicture = '';
+                              console.log(data,"data on image removal");
+                              SweetAlert.swal("Deleted!", "Your image has been deleted.", "success");
+                              })
+                            .error(function(data){
+                               alert(data);
+                            })
+ 
+                          
+                        } 
+                        else {
+                          SweetAlert.swal("Cancelled", "Your imaginary file is safe :)", "error");
+                        }
+                      });
+}
+  //   userService.removeProfilePicture().success(function(data){
+  //    $scope.userData.profilePicture = '';
+  //     console.log(data,"data on image removal");
+  //   }).error(function(data){
+  //     alert(data);
+  //   })
+  // }
 
   $scope.changeImage = function(){
     console.log("fuction on edit image");
@@ -100,12 +131,12 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
   
 
 	$scope.uploadPic = function(file) {
-		console.log(file,"file");
+	
     // file.upload = Upload.upload({
     //   url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
     //   data: {file: file},
     // });
-    console.log(file,"file1");
+    console.log(file,"file");
 
       userService.profilePicture(file).success(function(data){
         $scope.userData.profilePicture = 'http://localhost:3000/'+data.result.profilePicture;

@@ -7,11 +7,11 @@ angular.module('myApp', [
   'myApp.view1',
   'myApp.view2',
   'myApp.login',
-  'myApp.signup',
   'myApp.dashboard',
   'myApp.user',
   'myApp.header',
   'myApp.profile',
+  'oitozero.ngSweetAlert',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

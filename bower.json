@@ -12,6 +12,7 @@
     "angular-mocks": "~1.5.0",
     "html5-boilerplate": "^5.3.0",
     "ng-file-upload": "^12.2.13",
-    "angular-sweetalert": "latest"
+    "angular-sweetalert": "latest",
+    "angular-ui-router": "^1.0.15"
   }
 }

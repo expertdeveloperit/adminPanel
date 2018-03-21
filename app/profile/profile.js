@@ -51,16 +51,15 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
                   $scope.date = new Date($scope.data.createdAt);
                   $scope.userData.createdAt = $scope.date.getFullYear()+'-' + ($scope.date.getMonth()+1) + '-'+$scope.date.getDate();
                   $scope.userData.id = $scope.data._id;
-                  if($scope.userData.profilePicture == ""){
-                    $scope.userData.profilePicture = '../images/download.png';
-                  }
-                  else{
+                  if($scope.userData.profilePicture){
                     $scope.userData.profilePicture = 'http://localhost:3000/' + $scope.data.profilePicture;
                   }
+                  else{
+                    $scope.userData.profilePicture = '../images/download.png';
+                  }
                   
-                  console.log($scope.userData.profilePicture,"type of profile picture source");
                 }).error(function(data){
-                  console.log(data,"data on error");
+                  SweetAlert.swal(data);
                 })
  }
 
@@ -117,7 +116,7 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
   // }
 
   $scope.changeImage = function(){
-    console.log("fuction on edit image");
+    console.log("function on edit image");
     $scope.enableButton = true;
   }
 
@@ -137,14 +136,19 @@ angular.module('myApp.profile', ['ngRoute','ngFileUpload'])
     //   data: {file: file},
     // });
     console.log(file,"file");
+    if(!file){
+      SweetAlert.swal("Please select an image first to upload!")
+    }
 
-      userService.profilePicture(file).success(function(data){
-        $scope.userData.profilePicture = 'http://localhost:3000/'+data.result.profilePicture;
-        console.log('http://localhost:3000/'+data.result.profilePicture,"imagedata on success");
-
-      }).error(function(data){
-        console.log(data,"onfailure image upload");
-      });
+      else{userService.profilePicture(file).success(function(data){
+              $scope.userData.profilePicture = 'http://localhost:3000/'+data.result.profilePicture;
+              console.log('http://localhost:3000/'+data.result.profilePicture,"imagedata on success");
+              $scope.enableButton = false;
+      
+            }).error(function(data){
+              console.log(data,"onfailure image upload");
+              SweetAlert.swal(data);
+            });}
       // file.upload.then(function (response) {
       //   $timeout(function () {
       //     file.result = response.data;

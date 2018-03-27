@@ -1,0 +1,43 @@
+<div class="settings_area">
+ <div class="row">
+	<div class="image col-sm-offset-1 col-sm-4">
+		<form class="form-horizontal">
+			<label class="delete-icon" ng-click="deleteImage()">Delete</label>
+			<div class="form-group imageshow">
+				<div class="display">
+					<img ng-src="{{userData.profilePicture}}" err-src="{{myDefaultImage}}" class="img-rounded profile_picture">
+					<div class="hover">
+						<label for="file-upload" class="custom-file-upload" ng-click="changeImage()">
+							<i class="fa fa-cloud-upload">Change Profile</i>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="file_uploading" ng-show="enableButton">
+				<div class="form-group">
+					<input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile" id="file-upload" >
+				</div>
+				<div class="form-group">
+					<button ng-click="uploadPic(picFile)">Submit</button>
+					<a sref="settings" class="btn btn-primary" ng-click="disableEdit()">Cancel</a>
+				</div>
+			</div>
+			<span class="progress" ng-show="picFile.progress >= 0">
+				<div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
+			</span>
+			<span ng-show="picFile.result">Upload Successful</span>
+			<span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+		</form>
+	</div>
+ 	<div class=" col-sm-offset-1 col-sm-6 pills_area">
+ 		<ul class="nav nav-pills">
+    		<li><a data-toggle="pill" ui-sref="settings.profile" class="active">About</a></li>
+    		<li><a data-toggle="pill" ui-sref="settings.password">Password</a></li>
+    		<!-- <li><a data-toggle="pill" ui-sref="profile">Menu 2</a></li>
+    		<li><a data-toggle="pill" ui-sref="profile">Menu 3</a></li> -->
+  		</ul>
+
+  		<ui-view></ui-view>
+ 	</div>
+ </div>
+</div>

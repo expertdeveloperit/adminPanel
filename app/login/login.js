@@ -1,40 +1,44 @@
 'use strict';
 
-angular.module('myApp.login', ['ngRoute'])
+angular.module('myApp.login', ['ui.router'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/', {
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider
+  .state("home", {
+    url:"/",
     templateUrl: 'login/login.html',
     controller: 'LoginCtrl'
   });
 }])
 
-.controller('LoginCtrl', ['$scope','$http','$timeout','SweetAlert','userService',function($scope,$http,$timeout,SweetAlert,userService) {
+.controller('LoginCtrl', ['$rootScope','$scope','$http','$state','$timeout','SweetAlert','userService',function($rootScope,$scope,$http,$state,$timeout,SweetAlert,userService) {
     $scope.message="";
-    $scope.token_val = "";
+    $scope.token = {};
     $scope.disableLogin = true;
     $scope.userData = {};
     $scope.formData={};
     $scope.btn_text = "Sign Up";
     $scope.head_text = "Don't have an account?";
 
+  //Function to authenticate user at the time of login
 	$scope.logMeIn = function(){
-    console.log("in login function");
-		console.log($scope.formData);
-    
-       userService.login($scope.formData).success(function(data){
-        console.log(data,"executing call to server for login");
-          localStorage.setItem('token', JSON.stringify(data.token));
-          $scope.token_val = JSON.parse(localStorage.getItem('token'));
-          console.log(data.data.role,"role");
         
+       userService.login($scope.formData).success(function(data){
+        console.log(data);
+        // $scope.token = {"token":[{"data":data.data},{"token":data.token}]}
+          localStorage.setItem('token', JSON.stringify(data.token));
+          localStorage.setItem('info', JSON.stringify(data.data));
+
+          $scope.token = JSON.parse(localStorage.getItem('token'));
+          $scope.info = JSON.parse(localStorage.getItem('info'));
+          console.log($scope.token,"token from localStorage");
+          console.log($scope.info,"token from localStorage");        
         if(data.data.role == "user"){
-          window.location = "#!/profile";
+
+          $state.go("settings");
+         // $rootScope.$emit("CallParentMethod",$scope.token);
         }
         if(data.data.role == "superuser"){
-           // localStorage.setItem('token', JSON.stringify(data.token));
-           // $scope.token_val = JSON.parse(localStorage.getItem('token'));
-          console.log($scope.token_val,"token");
           window.location = "#!/dashboard";
         }
         
@@ -42,25 +46,26 @@ angular.module('myApp.login', ['ngRoute'])
         console.log(data);
         $scope.message = data.message;
         console.log($scope.message);
-        // alert($scope.message);
-        $scope.formData = "";
+        // $scope.formData = "";
         SweetAlert.swal($scope.message);
+        $state.go("home");
        })     
   }
-
+//Function to perform user registeration functionality
   $scope.registerMe = function(){
     
     if($scope.userData.name && $scope.userData.email && $scope.userData.password && $scope.userData.confirm_password){
       if($scope.userData.password == $scope.userData.confirm_password){
-        console.log($scope.userData.name,$scope.userData.email,$scope.userData.password,$scope.userData.confirm_password);
         $http.post('http://localhost:3000/api/signup', $scope.userData)
-              //on getting a successful response navigates to login page
+              //on getting a successful response switches to login form
               .success(function(data) {
                 
                   $scope.todos = data;
-                  console.log(data);
+                  SweetAlert.swal("Registered successfully");
+                  $scope.disableLogin = true;
+                  $scope.btn_text = 'Sign Up';
+                  $scope.head_text = "Don't have an Account?";
                   $scope.userData ="";
-                  window.location = "#!/login";
               })
               //on getting a response with error status(code) clears the form and remain stuck at registeration page
               .error(function(data) {
@@ -77,19 +82,15 @@ angular.module('myApp.login', ['ngRoute'])
         //to clear confirm password and password field on password mismatch
         $scope.userData.password ="" ;
         $scope.userData.confirm_password = "" ;
-        // alert("Password and confirm password doesnot match");
         SweetAlert.swal("Password and confirm password should be same");
       }
     }
     else{
-      // alert("Please fill form data");
       SweetAlert.swal("Please fill form data");
     }
   }
 
-  $scope.signup = function(){
-    window.location = "#!/signup";
-  } 
+  //change form from signup to login and from login to signup 
   $scope.change_form = function(){
     if(!$scope.disableLogin){
       $scope.disableLogin = true;

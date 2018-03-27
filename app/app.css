@@ -18,10 +18,39 @@
 	margin-right: 0px;
   
 }
+div.display: {
+  position: static;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+}
 .imageshow{
   position: relative;
   display: inline-block;
 }
+span.fa.fa-sign-out{
+    color: #fff;
+    float: right;
+    line-height: 43px;
+    font-size: 23px;
+}
+/*div.form-group.imageshow{
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden
+}*/
+ .imageshow:hover img.profile_picture{
+  opacity:0.6;
+
+}
+.form-group.imageshow .fa-trash {
+  display: none;
+}
+.form-group.imageshow:hover .fa-trash {
+  display: block;
+} 
+
 .hover{
   position: absolute;
   top: 0;  
@@ -45,6 +74,17 @@ input[type="file"] {
     padding: 6px 12px;
     cursor: pointer;
 }
+label.custom-file-upload {
+  position: absolute;
+    bottom: 11px;
+    left: 0;
+    border-left: 0px;
+    border-bottom: 0px;
+    border-right: 0px;
+    right: 0;
+    text-align: center;
+    font-size: 20px;
+}
 
 .login_btn{
 	display: block;
@@ -67,6 +107,13 @@ input[type="file"] {
 }
 .signup_head{
   margin: 38px 0;
+}
+.nav-pills{
+  margin-bottom: 30px;
+    border-bottom: 1px solid #f4f6f9;
+}
+nav.navbar.navbar-inverse {
+    margin-bottom: 0px;
 }
 .change_btn{
   background-color:rgba(157,192,221,1);;
@@ -151,10 +198,37 @@ input[type="file"] {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
-.profile_picture{
-  width:230px;
-  height:200px;
+.profile_picture {
+    width: 400px;
+    height: 400px;
+  }
+  .delete-icon {
+   position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 999;
 }
+.display img {
+  margin-top: 50px;
+}
+.image .form-horizontal {
+  text-align: center;
+}
+  .row{
+    margin-left: 0px;
+    margin-right:0px;
+  }
+  .image.col-sm-4{
+    height: 500px;
+    width: 500px;
+    background: #fff;
+  }
+  .col-sm-offset-1.col-sm-6.pills_area {
+    background: #fff;
+    width: 745px;
+    height: 600px;
+        padding: 30px;
+  }
 .col-sm-4{
   padding-left: 0px;
   padding-right: 0px;
@@ -207,6 +281,11 @@ p.user{
 }
 .login_page {
     background-color: #337ab7;
+    height: 100vh;
+    padding: 79px 0;
+}
+.settings_area{
+  background-color: #f4f6f9;
     height: 100vh;
     padding: 79px 0;
 }

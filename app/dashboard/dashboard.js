@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('myApp.dashboard', ['ngRoute'])
+angular.module('myApp.dashboard', ['ui.router'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/dashboard', {
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider.state('dashboard', {
+    url:'/dashboard',
     templateUrl: 'dashboard/dashboard.html',
     controller: 'DashboardCtrl'
   });
@@ -39,7 +40,7 @@ angular.module('myApp.dashboard', ['ngRoute'])
 })
 
 
-.controller('DashboardCtrl', ['$scope','$http','userService',function($scope,$http,userService) {
+.controller('DashboardCtrl', ['$scope','$state','$http','userService',function($scope,$state,$http,userService) {
 	$scope.userlist = [];
     $scope.response="";
 

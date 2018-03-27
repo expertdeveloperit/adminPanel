@@ -25,18 +25,19 @@ angular.module('myApp.services',[]).service("userService",function($http){
 		},
 
 		updateUser: function(modifiedData,id){
-			console.log(modifiedData,"changeData");
+
 			return $http.put('http://localhost:3000/api/update/' + id,modifiedData);
 		},
 
 		user :function(){
 			var token = JSON.parse(localStorage.getItem('token'));
-			// console.log(token,"token");
+
 			return $http.get('http://localhost:3000/api/userdata',
 			{headers: {'Authorization': 'Bearer ' + token}});
 		},
 
 		profilePicture: function(imagename){
+			var token = JSON.parse(localStorage.getItem('token'));
 
 			var fd = new FormData();
 
@@ -49,12 +50,20 @@ angular.module('myApp.services',[]).service("userService",function($http){
 
 		removeProfilePicture: function(profilePicture){
 			var token = JSON.parse(localStorage.getItem('token'));
-			console.log(token,"token");
 
 			return $http.put('http://localhost:3000/api/deleteimage',profilePicture,
 				{headers: 
 					{"Authorization": "Bearer " + token}}
 					);
+		},
+
+		changepassword : function(passwordData){
+			var token = JSON.parse(localStorage.getItem('token'));
+
+			return $http.put('http://localhost:3000/api/changepassword',passwordData,
+			{
+				headers:{"Authorization" : "Bearer " + token}
+			});
 		}
 	}
 })

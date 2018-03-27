@@ -1,17 +1,18 @@
 'use strict';
 
-angular.module('myApp.user', ['ngRoute'])
+angular.module('myApp.user', ['ui.router'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/update/:id', {
+.config(['$stateProvider', function($stateProvider) {
+  $stateProvider.state('user', {
+  	url:'/update/:id',
     templateUrl: 'user/user.html',
     controller: 'UserCtrl'
   });
 }])
 
-.controller('UserCtrl', ['$scope','$routeParams','userService',function($scope,$routeParams,userService) {
+.controller('UserCtrl', ['$scope','$state','$stateParams','Sweetalert','userService',function($scope,$state,$stateParams,Sweetalert,userService) {
 
-	$scope.id = $routeParams.id;
+	$scope.id = $stateParams.id;
 	$scope.disablePassword = true;
 
 	$scope.userInfo =function(id){
@@ -27,7 +28,7 @@ angular.module('myApp.user', ['ngRoute'])
 			$scope.user.password = details.userData.password; 
 		})
 		.error(function(response){
-			alert(response.Error);
+			Sweetalert.swal(response.Error);
 		})
 		
 	}

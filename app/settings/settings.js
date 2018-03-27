@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('myApp.profile', ['ui.router','ngFileUpload'])
+angular.module('myApp.settings', ['ui.router','ngFileUpload'])
 
 .config(['$stateProvider', function($stateProvider) {
   $stateProvider
-  .state('settings.profile', {
-    url:'/profile',
-    templateUrl: 'profile/profile.html',
-    controller: 'ProfileCtrl'
+  .state('settings', {
+    url:'/settings',
+    templateUrl: 'settings/settings.html',
+    controller: 'SettingsCtrl'
   });
 }])
 
-.controller('ProfileCtrl', ['$scope','$rootScope', 'Upload', '$timeout','SweetAlert','userService',function($scope,$rootScope,Upload,$timeout,SweetAlert,userService) {
+.controller('SettingsCtrl', ['$scope','$rootScope','Upload', '$timeout','SweetAlert','userService',function($scope,$rootScope,Upload,$timeout,SweetAlert,userService) {
 
  $scope.userData = {};
  $scope.isDisabled = true;
@@ -19,8 +19,6 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
  $scope.myDefaultImage = '../images/download.png';
  $scope.enableButton = false;
  $scope.user = {};
-
- 
  
  // $scope.buttonText = "";
  // $scope.toggle = true;
@@ -47,6 +45,7 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
   $scope.info = function(){
   
                 userService.user().success(function(data){
+
                   $scope.isDisabled = true;
                   $scope.userData={};
                   $scope.data = data.data;
@@ -75,17 +74,14 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
   $scope.update = function(){
     userService.updateUser($scope.userData,$scope.userData.id).success(function(data){
        $scope.isDisabled = true;
-       localStorage.setItem('info', JSON.stringify(data.data));
-        $scope.info = JSON.parse(localStorage.getItem('info'));
-         $rootScope.$emit("updatedata", JSON.parse(localStorage.getItem('info')));
       SweetAlert.swal("Data updated successfully!");
     }).error(function(data){
-      
+      console.log(data,"error on updating data");
     });
   }
 
   $scope.deleteImage = function(){
-
+    console.log("in delete function");
 
     SweetAlert.swal({
                       title: "Are you sure?",
@@ -101,6 +97,7 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
                         if (isConfirm) {
                             userService.removeProfilePicture().success(function(data){
                               $scope.userData.profilePicture = '';
+                              console.log(data,"data on image removal");
                               SweetAlert.swal("Deleted!", "Your image has been deleted.", "success");
                               })
                             .error(function(data){
@@ -117,6 +114,7 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
 
 
   $scope.changeImage = function(){
+    console.log("function on edit image");
     $scope.enableButton = true;
   }
 
@@ -135,16 +133,22 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
     //   url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
     //   data: {file: file},
     // });
+    console.log(file,"file");
     if(!file){
       SweetAlert.swal("Please select an image first to upload!")
     }
 
       else{userService.profilePicture(file).success(function(data){
               $scope.userData.profilePicture = 'http://localhost:3000/'+data.data.profilePicture;
+              console.log('http://localhost:3000/'+data.data.profilePicture,"imagedata on success");
               $scope.enableButton = false;
+              $scope.storage = JSON.parse(localStorage.getItem('info'));
+              $scope.storage.profilePicture = data.data.profilePicture;
+              localStorage.setItem('info', JSON.stringify($scope.storage));
+              $rootScope.$emit("imageupdate",JSON.parse(localStorage.getItem('info')));
               SweetAlert.swal("Profile Picture Updated!");
-              
             }).error(function(data){
+              console.log(data,"onfailure image upload");
               SweetAlert.swal(data);
             });}
       // file.upload.then(function (response) {
@@ -160,6 +164,10 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
       // });
       
 
+    }
+    $scope.deletion = function(){
+
+    	console.log("function is executing");
     }
 
 

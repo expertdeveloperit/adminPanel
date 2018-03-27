@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body ng-app="myApp">
+<body ng-app="myApp" ng-controller="mainController">
   <!-- <ul class="menu">
     <li><a href="#!/view1">view1</a></li>
     <li><a href="#!/view2">view2</a></li>
@@ -24,8 +24,25 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
+  <nav class="navbar navbar-inverse" ng-hide="$state.includes('home')">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">adminPanel</a>
+    </div>
+    <!-- <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><a href="#">Page 3</a></li>
+    </ul> -->
+    <span class="fa fa-sign-out" ng-click="logOut()">Logout</span>
+    <img ng-src="{{user.profilePicture}}" class="img-thumbnail header_img">
+    <p class="user">Hello,{{user.userName}}</p>
 
-  <div ng-view></div>
+  </div>
+</nav>
+
+  <div ui-view></div>
 
   </div>
 
@@ -43,9 +60,11 @@
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
   <script src="login/login.js"></script>
-   <script src="header/header.js"></script>
+  <script src="settings/settings.js"></script>
+  <script src="header/header.js"></script>
   <script src="dashboard/dashboard.js"></script>
   <script src="profile/profile.js"></script>
+  <script src="password/password.js"></script>
   <script src="user/user.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>

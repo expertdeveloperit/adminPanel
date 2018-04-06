@@ -10,7 +10,7 @@ angular.module('myApp.login', ['ui.router'])
     controller: 'LoginCtrl'
   });
 }])
-
+//defining lohon/signup controller
 .controller('LoginCtrl', ['$rootScope','$scope','$http','$state','$timeout','SweetAlert','userService',function($rootScope,$scope,$http,$state,$timeout,SweetAlert,userService) {
     $scope.message="";
     $scope.token = {};
@@ -45,8 +45,6 @@ angular.module('myApp.login', ['ui.router'])
        }).error(function(data){
         console.log(data);
         $scope.message = data.message;
-        console.log($scope.message);
-        // $scope.formData = "";
         SweetAlert.swal($scope.message);
         $state.go("home");
        })     

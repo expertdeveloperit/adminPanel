@@ -1,9 +1,10 @@
-<!-- Login form -->
+<!-- Login Content Area -->
 <div class="login_page">
 	<div class="container login_register">
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="login_form" ng-if="disableLogin">
+					<!-- Login Form -->
 					<form class="form-horizontal" ng-submit="logMeIn()" >
 						<h3 class="login_head text-center">Login</h3>
 						<div class="form-group">
@@ -17,8 +18,10 @@
 						</div>
 					</form>
 				</div>
-				<!-- signUp Form -->
+				<!-- End of login section -->
+				<!-- signUp Section -->
 				<div class="signup_form" ng-if="!disableLogin">
+					<!-- signup form -->
 					<form class="form-horizontal" ng-submit="registerMe()">
 						<h3 class="signup_head text-center">SignUp!</h3>
 						<div class="form-group">
@@ -39,6 +42,7 @@
 					</form>
 				</div>
 			</div>
+			<!-- End of sign up section -->
 			<!-- SideArea for sitching from login to sign up and signup to login -->
 			<div class="section_2 col-sm-6">
 				<h3 class="text-center section_heading">{{head_text}}</h3>

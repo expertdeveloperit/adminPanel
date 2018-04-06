@@ -1,54 +1,20 @@
-
-		<!-- <app-header></app-header> -->
-		<!--<div class="image col-sm-6">
-			<form class="form-horizontal" name="myForm">
-				<div class="form-group imageshow">
-					<i class="fa fa-trash" ng-click="deleteImage()"></i>
-					<div class="ds">
-					<img ng-src="{{userData.profilePicture}}" err-src="{{ myDefaultImage }}" class="img-rounded profile_picture">
-					<div class="hover">
-						
-						
-						<label for="file-upload" class="custom-file-upload" ng-click="changeImage()">
-    						<i class="fa fa-cloud-upload"></i> change profile
-						</label>
-					</div>
-				</div>
-				</div>
-				<div class="file_uploading" ng-show="enableButton">
-					<div class="form-group">
-						
-						<input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile" id="file-upload" >
-					</div>
-					<div class="form-group">
-						<button ng-click="uploadPic(picFile)">Submit</button>
-						<a href="#!/profile" class="btn btn-primary" ng-click="disableEdit()">Cancel</a>
-					</div>
-				</div>
-				
-				<span class="progress" ng-show="picFile.progress >= 0">
-        			<div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
-      			</span>
-      			<span ng-show="picFile.result">Upload Successful</span>
-      			<span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-			</form>
-		</div> -->
-			<form class="form-horizontal" ng-submit="update()">
-				<div class="form-group">
-					<label for="userName">Name</label>
-					<input type="text" name="userName" class="form-control" ng-disabled="isDisabled" ng-model="userData.userName" >
-				</div>
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input type="email" name="email" class="form-control" ng-disabled="isDisabled" ng-model="userData.email" >
-				</div>
-				<div class="form-group">
-					<label for="createdAt">Account created on</label>
-					<input type="text" name="createdAt" class="form-control" ng-disabled="true" ng-model="userData.createdAt" >
-				</div>
-				<div class="form-group row">
-					<button type="submit" class="btn btn-success" ng-show="!isDisabled">Save Changes</button>
-					<a sref="profile" class="btn btn-danger" ng-click="replace()" ng-hide="!isDisabled">Update</a>
-					<a sref="#!/profile" class="btn btn-default" ng-click="changeMode()" ng-hide="isDisabled">Cancel</a>
-				</div>
-			</form>
+<!-- User Details Page -->
+<form class="form-horizontal" ng-submit="update()">
+	<div class="form-group">
+		<label for="userName">Name</label>
+		<input type="text" name="userName" class="form-control" ng-disabled="isDisabled" ng-model="userData.userName" >
+	</div>
+	<div class="form-group">
+		<label for="email">Email</label>
+		<input type="email" name="email" class="form-control" ng-disabled="isDisabled" ng-model="userData.email" >
+	</div>
+	<div class="form-group">
+		<label for="createdAt">Account created on</label>
+		<input type="text" name="createdAt" class="form-control" ng-disabled="true" ng-model="userData.createdAt" >
+	</div>
+	<div class="form-group row">
+		<button type="submit" class="btn btn-success" ng-show="!isDisabled">Save Changes</button>
+		<a sref="profile" class="btn btn-danger" ng-click="replace()" ng-hide="!isDisabled">Update</a>
+		<a sref="#!/profile" class="btn btn-default" ng-click="changeMode()" ng-hide="isDisabled">Cancel</a>
+	</div>
+</form>

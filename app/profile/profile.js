@@ -10,7 +10,7 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
     controller: 'ProfileCtrl'
   });
 }])
-
+//defining controller for settings page
 .controller('ProfileCtrl', ['$scope','$rootScope', 'Upload', '$timeout','SweetAlert','userService',function($scope,$rootScope,Upload,$timeout,SweetAlert,userService) {
 
  $scope.userData = {};
@@ -19,17 +19,6 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
  $scope.myDefaultImage = '../images/download.png';
  $scope.enableButton = false;
  $scope.user = {};
-
- 
- 
- // $scope.buttonText = "";
- // $scope.toggle = true;
-
-// This is to change the button text on some event
- // $scope.$watch('toggle', function(){
- //        $scope.buttonText = $scope.toggle ? 'Update' : 'Cancel';
- //    })
-
 
   $scope.replace = function () {
                 $scope.isDisabled = false;
@@ -43,7 +32,7 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
                       $scope.userData.createdAt = $scope.data.createdAt;
                       SweetAlert.swal("No changes are saved");
                     }
-
+//displays user personal information
   $scope.info = function(){
   
                 userService.user().success(function(data){
@@ -69,9 +58,10 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
                   SweetAlert.swal(data);
                 })
  }
+//executing function on page load
+ $scope.info();
 
- $scope.info(); 
-
+//updates user details
   $scope.update = function(){
     userService.updateUser($scope.userData,$scope.userData.id).success(function(data){
        $scope.isDisabled = true;
@@ -84,9 +74,8 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
     });
   }
 
+//deletes user profile picture
   $scope.deleteImage = function(){
-
-
     SweetAlert.swal({
                       title: "Are you sure?",
                       text: "Your will not be able to recover this image!",
@@ -106,8 +95,6 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
                             .error(function(data){
                                alert(data);
                             })
- 
-                          
                         } 
                         else {
                           SweetAlert.swal("Cancelled", "Your imaginary file is safe :)", "error");
@@ -128,13 +115,8 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
   $scope.header = JSON.parse(localStorage.getItem('token'));
 
   
-
+//uploads user profile picture
 	$scope.uploadPic = function(file) {
-	
-    // file.upload = Upload.upload({
-    //   url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-    //   data: {file: file},
-    // });
     if(!file){
       SweetAlert.swal("Please select an image first to upload!")
     }
@@ -147,23 +129,11 @@ angular.module('myApp.profile', ['ui.router','ngFileUpload'])
             }).error(function(data){
               SweetAlert.swal(data);
             });}
-      // file.upload.then(function (response) {
-      //   $timeout(function () {
-      //     file.result = response.data;
-      //   });
-      // }, function (response) {
-      //   if (response.status > 0)
-      //     $scope.errorMsg = response.status + ': ' + response.data;
-      // }, function (evt) {
-      //   // Math.min is to fix IE which reports 200% sometimes
-      //   file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-      // });
-      
-
     }
 
 
 }])
+//directive to watch image change
 .directive('errSrc', function() {
       return {
         link: function(scope, element, attrs) {

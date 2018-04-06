@@ -8,13 +8,12 @@ angular.module('myApp.header', ['ngRoute'])
     controller: 'HeaderCtrl'
   });
 }])
-
+// controller for header
 .controller('HeaderCtrl', ['$scope','userService',function($scope,userService) {
 	$scope.user = {};
 	$scope.baseUrl = 'http://localhost:3000/'
 	$scope.getHeaderData = function(){
 		userService.user().success(function(data){
-			console.log(data.data,"header data on success");
 			$scope.user.userName = data.data.userName;
 			$scope.user.role = data.data.role;
 			$scope.user.profilePicture = $scope.baseUrl + data.data.profilePicture;
@@ -23,10 +22,11 @@ angular.module('myApp.header', ['ngRoute'])
 			console.log(data,"header data on error");
 		})
 	}
+	//executing function at page load
 	$scope.getHeaderData();
 
 }])
-
+//creating header directive
 .directive('appHeader',function(){
 
 	var directive = {};

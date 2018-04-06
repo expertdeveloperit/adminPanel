@@ -9,10 +9,10 @@ angular.module('myApp.password', ['ui.router'])
     controller: 'PasswordCtrl'
   });
 }])
-
+//defining module for password setting module
 .controller('PasswordCtrl', ['$scope','$http','$state','SweetAlert','userService',function($scope,$http,$state,SweetAlert,userService) {
 
-
+	//creating model for password change
 	$scope.changePassword = function(){
 		$scope.passowrd = {};
 		
